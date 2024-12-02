@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 public class teamRobot {
      public enum ClawState {
         OPEN_CLAW,
         CLOSE_CLAW
     }
-    public DcMotor frontRightMotor;
-    public DcMotor frontLeftMotor;
-    public DcMotor backRightMotor;
-    public DcMotor backLeftMotor;
+    public DcMotorEx frontRightMotor;
+    public DcMotorEx frontLeftMotor;
+    public DcMotorEx backRightMotor;
+    public DcMotorEx backLeftMotor;
     public DcMotor clawMotor;
     public DcMotor liftMotor;
     public Servo clawRightServo;

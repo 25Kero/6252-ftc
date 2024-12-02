@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name = "Autonomous", preselectTeleOp = "Driver Teleop")
@@ -12,10 +13,10 @@ public class Auto extends LinearOpMode {
     @Override
     public void runOpMode() {
         // initialize motors and servos with configuration
-        Robot.frontRightMotor = hardwareMap.get(DcMotor.class, Robot.FRONT_RIGHT);
-        Robot.frontLeftMotor = hardwareMap.get(DcMotor.class, Robot.FRONT_LEFT);
-        Robot.backRightMotor = hardwareMap.get(DcMotor.class, Robot.BACK_RIGHT);
-        Robot.backLeftMotor = hardwareMap.get(DcMotor.class, Robot.BACK_LEFT);
+        Robot.frontRightMotor = hardwareMap.get(DcMotorEx.class, Robot.FRONT_RIGHT);
+        Robot.frontLeftMotor = hardwareMap.get(DcMotorEx.class, Robot.FRONT_LEFT);
+        Robot.backRightMotor = hardwareMap.get(DcMotorEx.class, Robot.BACK_RIGHT);
+        Robot.backLeftMotor = hardwareMap.get(DcMotorEx.class, Robot.BACK_LEFT);
         Robot.clawMotor = hardwareMap.get(DcMotor.class, Robot.CLAW_MOTOR);
         Robot.liftMotor = hardwareMap.get(DcMotor.class, Robot.LIFT);
 
