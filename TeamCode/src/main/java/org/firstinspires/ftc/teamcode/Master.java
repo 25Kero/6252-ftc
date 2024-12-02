@@ -81,7 +81,7 @@ public class Master extends LinearOpMode {
     private void clawControl() {
         //open and close the claw
         // right bumper opens, left bumper closes
-        if (gamepad1.right_bumper) {
+        if (gamepad2.right_bumper) {
             Robot.setClawState(teamRobot.ClawState.OPEN_CLAW);
         }
         if (gamepad2.left_bumper) {
