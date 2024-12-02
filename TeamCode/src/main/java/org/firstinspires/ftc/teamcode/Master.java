@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp(name = "Driver Teleop")
 public class Master extends LinearOpMode {
@@ -12,10 +13,10 @@ public class Master extends LinearOpMode {
     @Override
     public void runOpMode() {
         // initialize motors with configuration
-        Robot.frontRightMotor = hardwareMap.get(DcMotor.class, Robot.FRONT_RIGHT);
-        Robot.frontLeftMotor = hardwareMap.get(DcMotor.class, Robot.FRONT_LEFT);
-        Robot.backRightMotor = hardwareMap.get(DcMotor.class, Robot.BACK_RIGHT);
-        Robot.backLeftMotor = hardwareMap.get(DcMotor.class, Robot.BACK_LEFT);
+        Robot.frontRightMotor = hardwareMap.get(DcMotorEx.class, Robot.FRONT_RIGHT);
+        Robot.frontLeftMotor = hardwareMap.get(DcMotorEx.class, Robot.FRONT_LEFT);
+        Robot.backRightMotor = hardwareMap.get(DcMotorEx.class, Robot.BACK_RIGHT);
+        Robot.backLeftMotor = hardwareMap.get(DcMotorEx.class, Robot.BACK_LEFT);
         Robot.clawMotor = hardwareMap.get(DcMotor.class, Robot.CLAW_MOTOR);
         Robot.liftMotor = hardwareMap.get(DcMotor.class, Robot.LIFT);
 
@@ -48,10 +49,10 @@ public class Master extends LinearOpMode {
 
         // if precsisonDrive, then set values to 1/4 their value for the robot to move 1/4 the speed
         if (precisionDrive) {
-            rightX = 0.25 * gamepad1.right_stick_x;
-            rightY = 0.25 * gamepad1.right_stick_y;
-            leftX = gamepad1.left_stick_x / 4;
-            leftY = gamepad1.left_stick_y / 4;
+            rightX = gamepad1.right_stick_x / 3;
+            rightY = gamepad1.right_stick_y / 3;
+            leftX = gamepad1.left_stick_x / 3;
+            leftY = gamepad1.left_stick_y / 3;
         } else {
             rightX = gamepad1.right_stick_x;
             rightY = gamepad1.right_stick_y;
@@ -91,11 +92,11 @@ public class Master extends LinearOpMode {
         // lower and raise claw
         // values for sticks greater than zero mean user is pulling the stick down, vice versa
         if (gamepad2.right_stick_y > 0) {
-            Robot.clawMotor.setPower(0);
+            Robot.clawMotor.setPower(-0.5);
         } else if (gamepad2.right_stick_y < 0) {
             Robot.clawMotor.setPower(0.6);
         } else {
-            Robot.clawMotor.setPower(0.2);
+            Robot.clawMotor.setPower(0.1);
         }
 
         //open and close clipping servo
