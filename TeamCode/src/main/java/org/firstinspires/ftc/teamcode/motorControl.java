@@ -13,12 +13,11 @@ public class motorControl {
     private double kStatic;
     private PIDFController controller;
     private DcMotorEx assignedMotor;
-
     public motorControl(DcMotorEx motor, double kP, double kI, double kD, double kV, double kA) {
         assignedMotor = motor;
 
-        PIDCoefficients coeffs = new PIDCoefficients(kP, kI, kD);
-        controller = new PIDFController(coeffs, kV, kA, kStatic);
+        PIDCoefficients coefficents = new PIDCoefficients(kP, kI, kD);
+        controller = new PIDFController(coefficents, kV, kA, kStatic);
     }
 
     public void updateControl(double targetPos, double targetVel, double targetAccel) {
@@ -27,7 +26,7 @@ public class motorControl {
         controller.setTargetAcceleration(targetAccel);
     }
     public void updateController() {
-        double error = controller.update(assignedMotor.getCurrentPosition(), assignedMotor.getVelocity());
+        double error = controller.update(assignedMotor.getCurrentPosition());
         assignedMotor.setPower(error);
     }
 }
