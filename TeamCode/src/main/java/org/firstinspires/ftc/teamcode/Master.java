@@ -22,12 +22,24 @@ public class Master extends LinearOpMode {
         Robot.frontLeftMotor = hardwareMap.get(DcMotorEx.class, Robot.FRONT_LEFT);
         Robot.backRightMotor = hardwareMap.get(DcMotorEx.class, Robot.BACK_RIGHT);
         Robot.backLeftMotor = hardwareMap.get(DcMotorEx.class, Robot.BACK_LEFT);
-        Robot.clawMotor = hardwareMap.get(DcMotor.class, Robot.CLAW_MOTOR);
-        Robot.liftMotor = hardwareMap.get(DcMotor.class, Robot.LIFT);
+        Robot.clawMotor = hardwareMap.get(DcMotorEx.class, Robot.CLAW_MOTOR);
+        Robot.liftMotor = hardwareMap.get(DcMotorEx.class, Robot.LIFT);
+        Robot.hangMotor = hardwareMap.get(DcMotorEx.class, Robot.HANG_MOTOR);
 
         Robot.clawRightServo = hardwareMap.get(Servo.class, Robot.CLAW_RIGHT);
         Robot.clawLeftServo = hardwareMap.get(Servo.class, Robot.CLAW_LEFT);
         Robot.clipServo = hardwareMap.get(Servo.class, Robot.CLIP);
+        Robot.hangServo = hardwareMap.get(Servo.class, Robot.HANG_SERVO);
+        Robot.odometryUnit = hardwareMap.get(GoBildaPinpointDriver.class, Robot.ODOMETRY_UNIT);
+        Robot.odometryUnit.setOffsets(0, 0);
+        Robot.odometryUnit.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        Robot.odometryUnit.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        Robot.odometryUnit.resetPosAndIMU();
+
+        Robot.frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Robot.frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Robot.backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Robot.backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // everything after this runs after driver presses play
         waitForStart();
 
@@ -36,12 +48,7 @@ public class Master extends LinearOpMode {
             driveControl();
             liftControl();
             clawControl();
-
-            telemetry.addData("rightX", rightX);
-            telemetry.addData("leftX", leftX);
-            telemetry.addData("rightY", rightY);
-            telemetry.addData("lightY", leftY);
-            telemetry.update();
+            hangControl();
         }
     }
 
@@ -88,6 +95,26 @@ public class Master extends LinearOpMode {
         }
     }
 
+    private void hangControl() {
+        if(gamepad1.y) {
+            Robot.hangServo.setPosition(pos.servohang2);
+        }
+        if(gamepad1.x) {
+            Robot.hangServo.setPosition(pos.servohang1);
+        }
+
+        if(gamepad1.b) {
+            Robot.hangServo.setPosition(0.1);
+        }
+
+        if (gamepad1.dpad_up) {
+            Robot.hangMotor.setPower(-0.9);
+        } else if (gamepad1.dpad_down) {
+            Robot.hangMotor.setPower(0.9);
+        } else {
+            Robot.hangMotor.setPower(0);
+        }
+    }
     /**
      * controls the claw servos and the motor that raises them
      * right bumper opens, left bumper closes
