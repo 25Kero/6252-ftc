@@ -51,10 +51,6 @@ public class Odo extends LinearOpMode {
         //runs after play is pressed
         waitForStart();
         while (opModeIsActive()) {
-//            Robot.runTrajectory(500, 0, 0, 2500, 0, 1);
-//            Robot.turnRobot(180, 2500, 0);
-//            Robot.runTrajectory(500, 0, 0, 2500, 0, 1);
-            // clip Block
             Robot.runTrajectory(pos.clipStart[0], pos.clipStart[1], 0, timings.startClip, 0.97, 0.2);
             Robot.liftClaw(0.5, 0.825);
             Robot.setClawState(teamRobot.ClawState.OPEN_CLAW);
@@ -91,7 +87,7 @@ public class Odo extends LinearOpMode {
             sleep(500);
             Robot.runTrajectory(0,0, 0, timings.secondBucketCorrection,0, 1);
             Robot.turnRobot(-135, timings.turnTime, 0.20);
-            Robot.runTrajectory(1150, 650, 0,  timings.finalHang, 2.5, 1);
+            //Robot.runTrajectory(1150, 650, 0,  timings.finalHang, 2.5, 1);
             requestOpModeStop();
         }
     }

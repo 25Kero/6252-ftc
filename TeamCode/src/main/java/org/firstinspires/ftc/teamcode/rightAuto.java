@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-
+@Autonomous(name = "New Right Auto", preselectTeleOp = "Driver Teleop 24-25")
 public class rightAuto extends LinearOpMode {
 
     private teamRobot Robot = new teamRobot();
@@ -38,10 +39,10 @@ public class rightAuto extends LinearOpMode {
         Robot.liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Robot.liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        Robot.frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Robot.frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Robot.backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Robot.backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        Robot.frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        Robot.frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        Robot.backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        Robot.backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
 
@@ -49,10 +50,20 @@ public class rightAuto extends LinearOpMode {
             Robot.runTrajectory(pos.clipStart[0], 0, 0, timings.startClip, 0.97, 0.2);
             Robot.liftClaw(0.5, 0.825);
             Robot.setClawState(teamRobot.ClawState.OPEN_CLAW);
-            Robot.runTrajectory(pos.clipEnd[0], 0, 0, timings.endClip, 0.25, 1);
+            Robot.runTrajectory(400, 0, 0, timings.endClip, 0, 1);
+            Robot.runTrajectory(rightValues.firstStrafe[0], rightValues.firstStrafe[1], 0, 1800, 0, 1);
+            Robot.runTrajectory(rightValues.firstBlockAlign[0], rightValues.firstBlockAlign[1], 0, 1800, 0, 1);
+            Robot.runTrajectory(rightValues.goBack[0], rightValues.goBack[1], 0, 2250, 0, 1);
+            Robot.runTrajectory(rightValues.secondBlockAlign[0], rightValues.secondBlockAlign[1], 0, 1800, 0, 1);
+            Robot.runTrajectory(rightValues.goBack[0], rightValues.goBack[1], 0, 2250, 0, 1);
+            Robot.turnRobot(180, 1800, 0);
 
-            Robot.runTrajectory(700, 700, 0, 1750, 0, 1);
-            Robot.runTrajectory(850, 700, 0, 1750, 0, 1);
+            Robot.setClipServoState(teamRobot.ClawState.OPEN_CLAW);
+            Robot.runTrajectory(300, 0, 0, 2000, 0.25, 1);
+            Robot.setClipServoState(teamRobot.ClawState.CLOSE_CLAW);
+            Robot.runTrajectory(-200, 1100, 0, 2000, 0.25, 1);
+
+            requestOpModeStop();
         }
     }
 }
