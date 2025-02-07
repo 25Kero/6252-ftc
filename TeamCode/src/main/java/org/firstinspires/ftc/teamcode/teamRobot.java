@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
@@ -36,9 +37,9 @@ public class teamRobot {
     public final String CLIP = "Emily4";
     public final String HANG_SERVO = "Hooked on a Feeling";
     public final String HANG_MOTOR = "crank that soulja boy";
-    private final PIDFController xController = new PIDFController(new PIDCoefficients(PID.kP, PID.kI, PID.kD));
-    private final PIDFController yController = new PIDFController(new PIDCoefficients(PID.kP, PID.kI, PID.kD));
-    private final PIDFController headingController = new PIDFController(new PIDCoefficients(PID.kPh, PID.kIh, PID.kDh));
+    public final PIDFController xController = new PIDFController(new PIDCoefficients(PID.kP, PID.kI, PID.kD));
+    public final PIDFController yController = new PIDFController(new PIDCoefficients(PID.kP, PID.kI, PID.kD));
+    public final PIDFController headingController = new PIDFController(new PIDCoefficients(PID.kPh, PID.kIh, PID.kDh));
     /**
      * Opens or closes the claw
      * @param clawState value if claw should be opened or closed
@@ -74,7 +75,7 @@ public class teamRobot {
         liftMotor.setPower(0);
     }
     public void runTrajectory(double x, double y, double heading, double endTime, double clawLift, double scalar) {
-
+        timer.reset();
         Pose2D pos = new Pose2D(DistanceUnit.MM, x, y, AngleUnit.DEGREES, heading);
         xController.setTargetPosition(pos.getX(DistanceUnit.MM));
         //xController.setTargetVelocity(0);
@@ -87,7 +88,6 @@ public class teamRobot {
         liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftMotor.setPower(1);
 
-        timer.reset();
         while (timer.milliseconds() < endTime) {
             odometryUnit.update();
             double xCorrection = scalar * xController.update(odometryUnit.getPosition().getX(DistanceUnit.MM));
