@@ -31,7 +31,7 @@ public class rightAuto extends LinearOpMode {
         Robot.odometryUnit.doInitialize();
 
         //start claw configuration, raised and closed
-        Robot.clawMotor.setPower(0.3);
+        Robot.clawMotor.setPower(0.5);
         Robot.setClawState(teamRobot.ClawState.CLOSE_CLAW);
 
         Robot.clawMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -59,8 +59,9 @@ public class rightAuto extends LinearOpMode {
             Robot.runTrajectory(rightValues.goBack[0], rightValues.goBack[1], 0, 1800, 0, 1);
             Robot.turnRobot(180, 1800, 0);
 
+            //grab block from human player
             Robot.setClipServoState(teamRobot.ClawState.OPEN_CLAW);
-            Robot.runTrajectory(275, 0, 0, 1800, 0, 1);
+            Robot.runTrajectory(250, 0, 0, 1800, 0, 1);
             Robot.setClipServoState(teamRobot.ClawState.CLOSE_CLAW);
             sleep(1500);
             Robot.runTrajectory(rightValues.returnToStation[0], rightValues.returnToStation[1], 0, 2000, rightValues.clipRaise, 1);

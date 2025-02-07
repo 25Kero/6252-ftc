@@ -36,7 +36,7 @@ public class Odo extends LinearOpMode {
         Robot.odometryUnit.doInitialize();
 
         //start claw configuration, raised and closed
-        Robot.clawMotor.setPower(0.3);
+        Robot.clawMotor.setPower(0.5);
         Robot.setClawState(teamRobot.ClawState.CLOSE_CLAW);
 
         Robot.clawMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
