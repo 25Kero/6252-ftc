@@ -53,16 +53,25 @@ public class rightAuto extends LinearOpMode {
             Robot.runTrajectory(400, 0, 0, timings.endClip, 0, 1);
             Robot.runTrajectory(rightValues.firstStrafe[0], rightValues.firstStrafe[1], 0, 1800, 0, 1);
             Robot.runTrajectory(rightValues.firstBlockAlign[0], rightValues.firstBlockAlign[1], 0, 1800, 0, 1);
-            Robot.runTrajectory(rightValues.goBack[0], rightValues.goBack[1], 0, 2250, 0, 1);
+            Robot.runTrajectory(rightValues.goBack[0], rightValues.goBack[1], 0, 1800, 0, 1);
             Robot.runTrajectory(rightValues.secondBlockAlign[0], rightValues.secondBlockAlign[1], 0, 1800, 0, 1);
-            Robot.runTrajectory(rightValues.goBack[0], rightValues.goBack[1], 0, 2250, 0, 1);
+            sleep(2000);
+            Robot.runTrajectory(rightValues.goBack[0], rightValues.goBack[1], 0, 1800, 0, 1);
             Robot.turnRobot(180, 1800, 0);
 
             Robot.setClipServoState(teamRobot.ClawState.OPEN_CLAW);
-            Robot.runTrajectory(300, 0, 0, 2000, 0.25, 1);
+            Robot.runTrajectory(275, 0, 0, 1800, 0, 1);
             Robot.setClipServoState(teamRobot.ClawState.CLOSE_CLAW);
-            Robot.runTrajectory(-200, 1100, 0, 2000, 0.25, 1);
+            sleep(1500);
+            Robot.runTrajectory(rightValues.returnToStation[0], rightValues.returnToStation[1], 0, 2000, rightValues.clipRaise, 1);
+            Robot.turnRobot(-170, 2000, rightValues.clipRaise);
 
+            Robot.runTrajectory(350, 0, 0, 1800, rightValues.clipRaise, 1);
+            Robot.liftClaw(rightValues.clipLower, 0.825);
+            Robot.setClipServoState(teamRobot.ClawState.OPEN_CLAW);
+            sleep(200);
+            Robot.runTrajectory(-550, 1200, 0, 2000, 0, 1);
+            sleep(8000);
             requestOpModeStop();
         }
     }

@@ -103,6 +103,7 @@ public class teamRobot {
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
         liftMotor.setPower(0);
+        odometryUnit.update();
     }
 
     public void raiseClaw(double clawLower) {
@@ -136,5 +137,6 @@ public class teamRobot {
         backLeftMotor.setPower(0);
         liftMotor.setPower(0);
         odometryUnit.setPosition(new Pose2D(DistanceUnit.MM, 0, 0, AngleUnit.RADIANS, 0));
+        odometryUnit.update();
     }
 }
