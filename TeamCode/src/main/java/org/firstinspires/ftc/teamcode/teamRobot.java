@@ -1,22 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.UtilityOctoQuadConfigMenu;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
-import org.jetbrains.annotations.Nullable;
 
 public class teamRobot {
-    public ElapsedTime timer = new ElapsedTime();
     public enum ClawState {
         OPEN_CLAW,
         CLOSE_CLAW
@@ -36,9 +30,9 @@ public class teamRobot {
     public final String CLIP = "Emily4";
     public final String HANG_SERVO = "Hooked on a Feeling";
     public final String HANG_MOTOR = "crank that soulja boy";
-    private final PIDFController xController = new PIDFController(new PIDCoefficients(PID.kP, PID.kI, PID.kD));
-    private final PIDFController yController = new PIDFController(new PIDCoefficients(PID.kP, PID.kI, PID.kD));
-    private final PIDFController headingController = new PIDFController(new PIDCoefficients(PID.kPh, PID.kIh, PID.kDh));
+    public final PIDFController xController = new PIDFController(new PIDCoefficients(PID.kP, PID.kI, PID.kD));
+    public final PIDFController yController = new PIDFController(new PIDCoefficients(PID.kP, PID.kI, PID.kD));
+    public final PIDFController headingController = new PIDFController(new PIDCoefficients(PID.kPh, PID.kIh, PID.kDh));
     /**
      * Opens or closes the claw
      * @param clawState value if claw should be opened or closed
