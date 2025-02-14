@@ -60,7 +60,7 @@ public class teamRobot {
      */
     public void setClipServoState(ClawState clawState) {
         if (clawState == ClawState.OPEN_CLAW) {
-            clipServo.setPosition(0);
+            clipServo.setPosition(0.25);
         } else {
             clipServo.setPosition(0.45);
         }
