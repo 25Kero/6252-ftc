@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 
 @Autonomous(name = "New Left Auto", preselectTeleOp = "Driver Teleop 24-25")
-public class Odo extends LinearOpMode {
+public class LeftAuto extends LinearOpMode {
     private teamRobot Robot = new teamRobot();
 
     public void runTrajectory(double x, double y, double heading, double endTime, double clawLift, double scalar) {
@@ -121,7 +121,7 @@ public class Odo extends LinearOpMode {
             sleep(500);
             runTrajectory(0,0, 0, timings.secondBucketCorrection,0, 0.9);
             Robot.turnRobot(-135, timings.turnTime, 0.20);
-            //Robot.runTrajectory(1150, 650, 0,  timings.finalHang, 2.5, 1);
+            sleep(10000);
             requestOpModeStop();
         }
     }

@@ -25,11 +25,14 @@ public class Master extends LinearOpMode {
         Robot.clawMotor = hardwareMap.get(DcMotorEx.class, Robot.CLAW_MOTOR);
         Robot.liftMotor = hardwareMap.get(DcMotorEx.class, Robot.LIFT);
         Robot.hangMotor = hardwareMap.get(DcMotorEx.class, Robot.HANG_MOTOR);
+        Robot.rackMotor = hardwareMap.get(DcMotorEx.class, Robot.RACK_MOTOR);
 
         Robot.clawRightServo = hardwareMap.get(Servo.class, Robot.CLAW_RIGHT);
         Robot.clawLeftServo = hardwareMap.get(Servo.class, Robot.CLAW_LEFT);
         Robot.clipServo = hardwareMap.get(Servo.class, Robot.CLIP);
         Robot.hangServo = hardwareMap.get(Servo.class, Robot.HANG_SERVO);
+        Robot.rackServo = hardwareMap.get(Servo.class, Robot.RACK_SERVO);
+
         Robot.odometryUnit = hardwareMap.get(GoBildaPinpointDriver.class, Robot.ODOMETRY_UNIT);
         Robot.odometryUnit.setOffsets(0, 0);
         Robot.odometryUnit.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);

@@ -22,9 +22,9 @@ public class teamRobot {
         OPEN_CLAW,
         CLOSE_CLAW
     }
-    public DcMotorEx frontRightMotor, frontLeftMotor, backRightMotor, backLeftMotor, clawMotor, liftMotor, hangMotor;
+    public DcMotorEx frontRightMotor, frontLeftMotor, backRightMotor, backLeftMotor, clawMotor, liftMotor, hangMotor, rackMotor;
     public GoBildaPinpointDriver odometryUnit;
-    public Servo clawRightServo, clawLeftServo, clipServo, hangServo;
+    public Servo clawRightServo, clawLeftServo, clipServo, hangServo, rackServo;
     public final String FRONT_RIGHT = "front right";
     public final String FRONT_LEFT = "front left";
     public final String BACK_RIGHT = "back right";
@@ -37,6 +37,8 @@ public class teamRobot {
     public final String CLIP = "Emily4";
     public final String HANG_SERVO = "Hooked on a Feeling";
     public final String HANG_MOTOR = "crank that soulja boy";
+    public final String RACK_MOTOR = "rackam";
+    public final String RACK_SERVO = "rack servo";
     public final PIDFController xController = new PIDFController(new PIDCoefficients(PID.kP, PID.kI, PID.kD));
     public final PIDFController yController = new PIDFController(new PIDCoefficients(PID.kP, PID.kI, PID.kD));
     public final PIDFController headingController = new PIDFController(new PIDCoefficients(PID.kPh, PID.kIh, PID.kDh));
@@ -78,10 +80,7 @@ public class teamRobot {
         timer.reset();
         Pose2D pos = new Pose2D(DistanceUnit.MM, x, y, AngleUnit.DEGREES, heading);
         xController.setTargetPosition(pos.getX(DistanceUnit.MM));
-        //xController.setTargetVelocity(0);
         yController.setTargetPosition(pos.getY(DistanceUnit.MM));
-        //yController.setTargetVelocity(0);
-        headingController.setInputBounds(-180, 180);
         headingController.setTargetPosition(pos.getHeading(AngleUnit.RADIANS));
 
         liftMotor.setTargetPosition((int) (-1120 * clawLift));
@@ -93,15 +92,11 @@ public class teamRobot {
             double xCorrection = scalar * xController.update(odometryUnit.getPosition().getX(DistanceUnit.MM));
             double yCorrection = scalar * yController.update(odometryUnit.getPosition().getY(DistanceUnit.MM));
             double headingCorrection = headingController.update(odometryUnit.getPosition().getHeading(AngleUnit.RADIANS));
-            frontRightMotor.setPower(xCorrection - yCorrection + headingCorrection);
-            frontLeftMotor.setPower(-xCorrection - yCorrection + headingCorrection);
-            backRightMotor.setPower(xCorrection + yCorrection + headingCorrection);
-            backLeftMotor.setPower(-xCorrection + yCorrection + headingCorrection);
+            frontRightMotor.setPower(powerLimit(xCorrection - yCorrection + headingCorrection));
+            frontLeftMotor.setPower(powerLimit(-xCorrection - yCorrection + headingCorrection));
+            backRightMotor.setPower(powerLimit(xCorrection + yCorrection + headingCorrection));
+            backLeftMotor.setPower(powerLimit(-xCorrection + yCorrection + headingCorrection));
         }
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
         liftMotor.setPower(0);
         odometryUnit.update();
     }
@@ -117,7 +112,6 @@ public class teamRobot {
 
     public void turnRobot(double heading, double endTime, double clawLift) {
         headingController.setTargetPosition(Math.toRadians(heading));
-        headingController.setTargetVelocity(0);
         liftMotor.setTargetPosition((int) (-1120 * clawLift));
         liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         liftMotor.setPower(1);
@@ -126,10 +120,10 @@ public class teamRobot {
         while (timer.milliseconds() < endTime) {
             odometryUnit.update();
             double headingCorrection = headingController.update(odometryUnit.getPosition().getHeading(AngleUnit.RADIANS));
-            frontRightMotor.setPower(headingCorrection);
-            frontLeftMotor.setPower(headingCorrection);
-            backRightMotor.setPower(headingCorrection);
-            backLeftMotor.setPower(headingCorrection);
+            frontRightMotor.setPower(powerLimit(headingCorrection));
+            frontLeftMotor.setPower(powerLimit(headingCorrection));
+            backRightMotor.setPower(powerLimit(headingCorrection));
+            backLeftMotor.setPower(powerLimit(headingCorrection));
         }
         frontRightMotor.setPower(0);
         frontLeftMotor.setPower(0);
@@ -138,5 +132,17 @@ public class teamRobot {
         liftMotor.setPower(0);
         odometryUnit.setPosition(new Pose2D(DistanceUnit.MM, 0, 0, AngleUnit.RADIANS, 0));
         odometryUnit.update();
+    }
+
+    public double powerLimit(double power) {
+        if(power > 1.0) {
+            power = 1.0;
+            return power;
+        } else if (power < -1.0) {
+            power = -1.0;
+            return power;
+        } else {
+            return power;
+        }
     }
 }
